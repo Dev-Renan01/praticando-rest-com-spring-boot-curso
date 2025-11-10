@@ -1,5 +1,6 @@
 package com.dev_renan01.controller;
 
+import com.dev_renan01.exception.OperacaoMatematicaNaoSuportadaException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,14 +19,14 @@ public class HelloController {
     public Double soma(@PathVariable("n1") String n1, @PathVariable("n2") String n2) throws Exception {
 
             if (!isNumeric(n1) || !isNumeric(n2) ) {
-                throw new IllegalArgumentException("Parâmetros .inválidos Use apenas números."); //lancar a Exception
+                throw new OperacaoMatematicaNaoSuportadaException("Parâmetros inválidos. Use apenas números!"); //lancar a Exception
             }
             return converterDouble(n1) + converterDouble(n2) ; // Convertendo n1, n2 para double
     }
 
     private double converterDouble(String n) {
         if(n == null || n.isEmpty()){
-            throw new IllegalArgumentException("Parâmetros inválidos. Use apenas números.");
+            throw new OperacaoMatematicaNaoSuportadaException("Parâmetros inválidos. Use apenas números!");
         }
         return Double.parseDouble(n); //retorna  convertendo String para double
     }
