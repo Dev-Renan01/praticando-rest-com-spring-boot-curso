@@ -2,7 +2,7 @@ package com.dev_renan01.service;
 
 import org.springframework.stereotype.Service;
 
-@Service // Injeção de dependências
+@Service 
 public class PessoaService {
 
 }
