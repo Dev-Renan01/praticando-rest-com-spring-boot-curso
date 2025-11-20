@@ -1,7 +1,6 @@
 package com.dev_renan01.exception.handler;
 
-import com.dev_renan01.exception.ExceptionResponse;
-import com.dev_renan01.exception.OperacaoMatematicaNaoSuportadaException;
+import com.dev_renan01.exception.ExceptionResposta;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -23,7 +22,7 @@ public class TratadorPersonalizadoExceções extends ResponseEntityExceptionHand
     // que não tenha sido tratada em outro lugar.
     // Isso faz dele um "tratador global" de exceções genéricas.
     @ExceptionHandler(Exception.class)
-    public final ResponseEntity<ExceptionResponse> tratarTodasExcecoes(Exception ex, WebRequest request){
+    public final ResponseEntity<ExceptionResposta> tratarTodasExcecoes(Exception ex, WebRequest request){
         // Exception - Objeto da exceção que foi lançada (mensagem, tipo, causa, etc.)
        // WebRequest - Informações sobre a requisição HTTP que causou o erro (URI, parâmetros, cabeçalhos)
 
@@ -31,19 +30,20 @@ public class TratadorPersonalizadoExceções extends ResponseEntityExceptionHand
         // new Date() → registra o momento em que o erro ocorreu.
         // ex.getMessage() → mensagem de erro gerada pela exceção.
         // request.getDescription(false) → detalhes sobre a requisição (ex: URI).
-        ExceptionResponse response = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
+        ExceptionResposta response = new ExceptionResposta(new Date(), ex.getMessage(), request.getDescription(false));
 
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR); // Erro 500 (GENÉRICO)
     }
 
+    @ExceptionHandler
+    public final ResponseEntity<ExceptionResposta> notFound(Exception ex, WebRequest request){
 
-    @ExceptionHandler(OperacaoMatematicaNaoSuportadaException.class)
-    public final ResponseEntity<ExceptionResponse> tratarErroOperacaoMatematica(Exception ex, WebRequest request){
+        ExceptionResposta response = new ExceptionResposta(new Date(), ex.getMessage(), request.getDescription(false));
 
-        ExceptionResponse response = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
-
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<ExceptionResposta>(response, HttpStatus.NOT_FOUND );
     }
+
+
 
 
 
