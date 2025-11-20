@@ -1,16 +1,29 @@
 package com.dev_renan01.model;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
 public class Pessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
+
+    @Column(nullable = false, length = 80)
     private String nome;
+
+    @Column(nullable = false, length = 80)
     private String sobrenome;
+
+    @Column(nullable = false, length = 80)
     private String endereco;
+
+    @Column(nullable = false, length = 10)
     private String genero;
 
     public Pessoa(){}
