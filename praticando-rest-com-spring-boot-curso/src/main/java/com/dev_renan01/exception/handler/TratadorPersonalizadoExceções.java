@@ -1,6 +1,7 @@
 package com.dev_renan01.exception.handler;
 
 import com.dev_renan01.exception.ExceptionResposta;
+import com.dev_renan01.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -35,12 +36,12 @@ public class TratadorPersonalizadoExceções extends ResponseEntityExceptionHand
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR); // Erro 500 (GENÉRICO)
     }
 
-    @ExceptionHandler
-    public final ResponseEntity<ExceptionResposta> notFound(Exception ex, WebRequest request){
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public final ResponseEntity<ExceptionResposta> notFoundException(Exception ex, WebRequest request){
 
         ExceptionResposta response = new ExceptionResposta(new Date(), ex.getMessage(), request.getDescription(false));
 
-        return new ResponseEntity<ExceptionResposta>(response, HttpStatus.NOT_FOUND );
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND );
     }
 
 
