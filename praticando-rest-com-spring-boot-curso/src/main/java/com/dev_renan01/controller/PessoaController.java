@@ -57,7 +57,6 @@ public class PessoaController {
 
         pessoaService.deletarPorId(id);
 
-        return new ResponseEntity<>("Usuário deletado com sucesso", HttpStatus.OK);
+        return  ResponseEntity.noContent().build(); // Retornar o status code 204
     }
-
 }
