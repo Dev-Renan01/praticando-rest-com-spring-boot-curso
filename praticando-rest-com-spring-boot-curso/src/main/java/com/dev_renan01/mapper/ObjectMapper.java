@@ -22,7 +22,7 @@ public class ObjectMapper {
         //utilizando o 'mapper' do Dozer.
     }
 
-    public static <O, D> List<D> parseListObject(List<O> origin, Class<D> destination) {
+    public static <O, D> List<D> parseListObjects(List<O> origin, Class<D> destination) {
        // Converte uma lista de objetos de origem em uma lista de objetos de destino
         // usando o Dozer como mecanismo de mapeamento.
 
@@ -30,7 +30,6 @@ public class ObjectMapper {
 
         for (Object o : origin) {
             destinatioObject.add(mapper.map(o, destination));
-
         }
         return destinatioObject;
     }
