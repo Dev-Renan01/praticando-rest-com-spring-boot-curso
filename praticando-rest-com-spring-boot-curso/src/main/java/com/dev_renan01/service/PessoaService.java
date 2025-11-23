@@ -1,11 +1,12 @@
 package com.dev_renan01.service;
 
+import com.dev_renan01.data.DTO.PessoaDTO;
 import com.dev_renan01.exception.ResourceNotFoundException;
+import com.dev_renan01.mapper.ObjectMapper;
 import com.dev_renan01.model.Pessoa;
 import com.dev_renan01.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -15,24 +16,28 @@ public class PessoaService {
     private PessoaRepository pessoaRepository;
 
 
-    public List<Pessoa> listarTodos(){
-       return pessoaRepository.findAll();
+    public List<PessoaDTO> listarTodos(){
+       return ObjectMapper.parseListObjects(pessoaRepository.findAll(), PessoaDTO.class);
     }
 
-    public Pessoa buscarPorId(Long id){
+    public PessoaDTO buscarPorId(Long id){
 
-        return pessoaRepository.findById(id)
+        var entity =  pessoaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Pessoa não encontrada para o ID: " + id));
+
+        return ObjectMapper.parseObject(entity, PessoaDTO.class);
     }
 
-    public Pessoa salvar(Pessoa pessoa){
+    public PessoaDTO salvar(PessoaDTO pessoa){
 
-       return pessoaRepository.save(pessoa);
+        var entity =  ObjectMapper.parseObject(pessoa, Pessoa.class);
+
+        return ObjectMapper.parseObject(pessoaRepository.save(entity), PessoaDTO.class);
     }
 
-    public Pessoa atualizar(Pessoa pessoa){
+    public PessoaDTO atualizar(PessoaDTO pessoa){
 
-       Pessoa entity = pessoaRepository.findById(pessoa.getId())
+        Pessoa entity = pessoaRepository.findById(pessoa.getId())
                 .orElseThrow(()-> new ResourceNotFoundException("Pessoa não encontrada para o ID: " + pessoa.getId()));
 
        entity.setNome(pessoa.getNome());
@@ -40,15 +45,12 @@ public class PessoaService {
        entity.setEndereco(pessoa.getEndereco());
        entity.setGenero(pessoa.getGenero());
 
-       return entity;
+       return  ObjectMapper.parseObject(pessoaRepository.save(entity), PessoaDTO.class);
     }
-
-
-
 
     public void deletarPorId(Long id){
 
-      Pessoa entity = pessoaRepository.findById(id)
+        Pessoa entity = pessoaRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Id não encontrado!"));
 
          pessoaRepository.delete(entity);
