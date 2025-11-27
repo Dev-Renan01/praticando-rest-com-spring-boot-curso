@@ -1,6 +1,6 @@
 package com.dev_renan01.service;
 
-import com.dev_renan01.data.DTO.PessoaDTO;
+import com.dev_renan01.data.DTO.v1.PessoaDTO;
 import com.dev_renan01.exception.ResourceNotFoundException;
 import com.dev_renan01.mapper.ObjectMapper;
 import com.dev_renan01.model.Pessoa;
@@ -56,4 +56,6 @@ public class PessoaService {
          pessoaRepository.delete(entity);
 
     }
+
+    //=======================SERVICES V2================================================
 }

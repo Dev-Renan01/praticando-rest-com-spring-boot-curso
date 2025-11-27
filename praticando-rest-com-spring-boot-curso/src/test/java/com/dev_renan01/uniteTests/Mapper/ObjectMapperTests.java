@@ -1,6 +1,6 @@
 package com.dev_renan01.uniteTests.Mapper;
 
-import com.dev_renan01.data.DTO.PessoaDTO;
+import com.dev_renan01.data.DTO.v1.PessoaDTO;
 import com.dev_renan01.model.Pessoa;
 import com.dev_renan01.uniteTests.Mapper.mocks.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
