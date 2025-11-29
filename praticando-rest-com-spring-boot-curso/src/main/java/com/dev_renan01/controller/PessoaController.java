@@ -76,7 +76,7 @@ public class PessoaController {
     @ResponseBody
     public ResponseEntity<PessoaDTOV2> findByIdV2(@PathVariable(name = "id") Long id){
 
-        PessoaDTOV2 pessoa = pessoaService.buscarPorId(id);
+        PessoaDTOV2 pessoa = pessoaService.buscarPorIdV2(id);
 
         return new ResponseEntity<>(pessoa, HttpStatus.OK);
     }
