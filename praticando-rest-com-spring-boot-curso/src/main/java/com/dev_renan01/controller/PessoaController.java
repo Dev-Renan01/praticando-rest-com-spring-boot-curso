@@ -67,7 +67,7 @@ public class PessoaController {
     @GetMapping(value = "/listarTodosV2")
     @ResponseBody
     public ResponseEntity<List<PessoaDTOV2>> findAllV2(){
-        List<PessoaDTOV2> pessoa = pessoaService.listarTodos();
+        List<PessoaDTOV2> pessoa = pessoaService.listarTodosV2();
 
         return new ResponseEntity<>(pessoa, HttpStatus.OK);
     }
@@ -85,7 +85,7 @@ public class PessoaController {
     @ResponseBody
     public ResponseEntity<PessoaDTOV2> saveV2(@RequestBody PessoaDTOV2 pessoa){
 
-        PessoaDTOV2 entity = pessoaService.salvar(pessoa);
+        PessoaDTOV2 entity = pessoaService.salvarV2(pessoa);
 
         return new ResponseEntity<>(entity, HttpStatus.OK);
     }
@@ -94,7 +94,7 @@ public class PessoaController {
     @ResponseBody
     public ResponseEntity<PessoaDTOV2> updateV2(@RequestBody PessoaDTOV2 pessoa){
 
-        PessoaDTOV2 entity =  pessoaService.atualizar(pessoa);
+        PessoaDTOV2 entity =  pessoaService.atualizarV2(pessoa);
 
         return new ResponseEntity<>(entity, HttpStatus.OK);
     }

@@ -4,12 +4,12 @@ import com.dev_renan01.data.DTO.v1.PessoaDTO;
 import com.dev_renan01.data.DTO.v2.PessoaDTOV2;
 import com.dev_renan01.exception.ResourceNotFoundException;
 import com.dev_renan01.mapper.ObjectMapper;
+import com.dev_renan01.mapper.custum.PessoaMapper;
 import com.dev_renan01.model.Pessoa;
 import com.dev_renan01.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,6 +17,9 @@ public class PessoaService {
 
     @Autowired
     private PessoaRepository pessoaRepository;
+
+    @Autowired
+    PessoaMapper converter;
 
 
     public List<PessoaDTO> listarTodos(){
@@ -64,9 +67,9 @@ public class PessoaService {
 
     public PessoaDTOV2 salvarV2(PessoaDTOV2 pessoa){
 
-        var entity = ObjectMapper.parseObject(pessoa, Pessoa.class);
+        var entity = converter.convertDTOToEntity(pessoa);
 
-        return ObjectMapper.parseObject(pessoaRepository.save(entity),PessoaDTOV2.class);
+        return converter.convertEntityToDTO((pessoaRepository.save(entity));
     }
 
     public List<PessoaDTOV2> listarTodosV2(){
@@ -86,9 +89,12 @@ public class PessoaService {
         var entity = pessoaRepository.findById(pessoa.getId())
                         .orElseThrow(() -> new ResourceNotFoundException("Pessoa não encontrada para o ID: " + pessoa.getId()));
 
+        PessoaMapper pessoaMapper = new PessoaMapper();
+
         entity.setNome(pessoa.getNome());
         entity.setSobrenome(pessoa.getSobrenome());
-        entity.setDataNascimento(pessoa.getDataNascimento());
+        pessoaMapper.convertEntityToDTO(entity);
+        //entity.setDataNascimento(new Date());
         entity.setEndereco(pessoa.getEndereco());
         entity.setGenero(pessoa.getGenero());
 
