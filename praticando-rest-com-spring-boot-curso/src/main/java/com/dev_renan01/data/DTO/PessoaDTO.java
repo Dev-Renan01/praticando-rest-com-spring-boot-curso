@@ -1,4 +1,4 @@
-package com.dev_renan01.data.DTO.v1;
+package com.dev_renan01.data.DTO;
 
 import jakarta.persistence.*;
 
