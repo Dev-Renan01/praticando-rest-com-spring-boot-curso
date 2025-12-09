@@ -1,11 +1,14 @@
 package com.dev_renan01.data.DTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@JsonPropertyOrder({"id", "nome", "sobrenome", "endereco", "genero" })    // Custumizar a ordem de exibição do Json
 public class PessoaDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -17,6 +20,7 @@ public class PessoaDTO implements Serializable {
     @Column(nullable = false, length = 80)
     private String nome;
 
+    @JsonProperty("last_name") //Define queal será o nome exibido
     @Column(nullable = false, length = 80)
     private String sobrenome;
 
