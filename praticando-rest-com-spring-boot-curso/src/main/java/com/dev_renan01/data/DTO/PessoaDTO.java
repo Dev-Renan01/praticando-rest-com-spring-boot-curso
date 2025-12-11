@@ -3,7 +3,9 @@ package com.dev_renan01.data.DTO;
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 //import com.fasterxml.jackson.annotation.JsonProperty;
 //import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.dev_renan01.serializer.GeneroSerializer;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -34,6 +36,8 @@ public class PessoaDTO implements Serializable {
     private Date dataNascimento;
 
    // @JsonIgnore
+   // Define que o GeneroSerializer será usado para setar o valor final no JSON durante a serialização.
+    @JsonSerialize(using = GeneroSerializer.class)
     @Column(nullable = false, length = 10)
     private String genero;
 
