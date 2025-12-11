@@ -1,14 +1,17 @@
 package com.dev_renan01.data.DTO;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+//import com.fasterxml.jackson.annotation.JsonIgnore;
+//import com.fasterxml.jackson.annotation.JsonProperty;
+//import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@JsonPropertyOrder({"id", "nome", "sobrenome", "endereco", "genero" })    // Custumizar a ordem de exibição do Json
+//@JsonPropertyOrder({"id", "nome", "sobrenome", "endereco", "genero" })    // Custumizar a ordem de exibição do Json
 public class PessoaDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -20,13 +23,17 @@ public class PessoaDTO implements Serializable {
     @Column(nullable = false, length = 80)
     private String nome;
 
-    @JsonProperty("last_name") //Define queal será o nome exibido
+   // @JsonProperty("sobrenome") //Define queal será o nome exibido
     @Column(nullable = false, length = 80)
     private String sobrenome;
 
     @Column(nullable = false, length = 80)
     private String endereco;
 
+    @JsonFormat(pattern = "dd/MM/yyyy") // formatar a data para um padrão brasileiro
+    private Date dataNascimento;
+
+   // @JsonIgnore
     @Column(nullable = false, length = 10)
     private String genero;
 
@@ -72,14 +79,22 @@ public class PessoaDTO implements Serializable {
         this.genero = genero;
     }
 
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof PessoaDTO pessoa)) return false;
-        return Objects.equals(getId(), pessoa.getId()) && Objects.equals(getNome(), pessoa.getNome()) && Objects.equals(getSobrenome(), pessoa.getSobrenome()) && Objects.equals(getEndereco(), pessoa.getEndereco()) && Objects.equals(getGenero(), pessoa.getGenero());
+        if (!(o instanceof PessoaDTO pessoaDTO)) return false;
+        return Objects.equals(getId(), pessoaDTO.getId()) && Objects.equals(getNome(), pessoaDTO.getNome()) && Objects.equals(getSobrenome(), pessoaDTO.getSobrenome()) && Objects.equals(getEndereco(), pessoaDTO.getEndereco()) && Objects.equals(getDataNascimento(), pessoaDTO.getDataNascimento()) && Objects.equals(getGenero(), pessoaDTO.getGenero());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getNome(), getSobrenome(), getEndereco(), getGenero());
+        return Objects.hash(getId(), getNome(), getSobrenome(), getEndereco(), getDataNascimento(), getGenero());
     }
 }

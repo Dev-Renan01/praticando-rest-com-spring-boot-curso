@@ -25,7 +25,6 @@ public class PessoaService {
 
         var entity = pessoaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Pessoa não encontrada para o ID: " + id));
-
         return ObjectMapper.parseObject(entity, PessoaDTO.class);
     }
 

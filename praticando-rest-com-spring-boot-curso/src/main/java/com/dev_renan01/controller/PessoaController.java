@@ -7,10 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/pessoa/v1")
+@RequestMapping(value = "/api/pessoa")
 public class PessoaController {
 
     @Autowired
@@ -18,42 +19,33 @@ public class PessoaController {
 
     @GetMapping(value = "/listarTodos")
     @ResponseBody
-    public ResponseEntity<List<PessoaDTO>> findAll(){
-       List<PessoaDTO> pessoa = pessoaService.listarTodos();
-
-       return new ResponseEntity<>(pessoa, HttpStatus.OK);
+    public List<PessoaDTO> findAll(){
+        return pessoaService.listarTodos();
     }
 
     @GetMapping(value = "/buscarPorId/{id}")
     @ResponseBody
-    public ResponseEntity<PessoaDTO> findById(@PathVariable(name = "id") Long id){
-
-        PessoaDTO pessoa = pessoaService.buscarPorId(id);
-
-        return new ResponseEntity<>(pessoa, HttpStatus.OK);
+    public PessoaDTO findById(@PathVariable(name = "id") Long id){
+        var pessoa =  pessoaService.buscarPorId(id);
+        pessoa.setDataNascimento(new Date());
+        return pessoa;
     }
 
     @PostMapping(value = "/salvar")
     @ResponseBody
-    public ResponseEntity<PessoaDTO> save(@RequestBody PessoaDTO pessoa){
-
-        PessoaDTO entity = pessoaService.salvar(pessoa);
-
-        return new ResponseEntity<>(entity, HttpStatus.OK);
+    public PessoaDTO save(@RequestBody PessoaDTO pessoa){
+        return pessoaService.salvar(pessoa);
     }
 
     @PutMapping(value = "/atualizar")
     @ResponseBody
-    public ResponseEntity<PessoaDTO> update(@RequestBody PessoaDTO pessoa){
-
-        PessoaDTO entity =  pessoaService.atualizar(pessoa);
-
-       return new ResponseEntity<>(entity, HttpStatus.OK);
+    public PessoaDTO update(@RequestBody PessoaDTO pessoa){
+        return pessoaService.atualizar(pessoa);
     }
 
     @DeleteMapping(value = "/deletar/{id}")
     @ResponseBody
-    public ResponseEntity<String> deleteById(@PathVariable(name = "id") Long id){
+    public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id){
 
         pessoaService.deletarPorId(id);
 
