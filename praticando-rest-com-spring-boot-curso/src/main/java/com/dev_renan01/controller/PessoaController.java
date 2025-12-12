@@ -28,6 +28,7 @@ public class PessoaController {
     public PessoaDTO findById(@PathVariable(name = "id") Long id){
         var pessoa =  pessoaService.buscarPorId(id);
         pessoa.setDataNascimento(new Date());
+        pessoa.setNumeroTelefone("(81) 9xxxx-xxxx");
         return pessoa;
     }
 

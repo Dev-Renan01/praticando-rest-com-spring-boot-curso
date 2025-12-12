@@ -5,6 +5,7 @@ package com.dev_renan01.data.DTO;
 //import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.dev_renan01.serializer.GeneroSerializer;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 
@@ -31,6 +32,10 @@ public class PessoaDTO implements Serializable {
 
     @Column(nullable = false, length = 80)
     private String endereco;
+
+    @Column(nullable = false, length = 80)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY) // O campo so será renderizado quando não for null
+    private String numeroTelefone;
 
     @JsonFormat(pattern = "dd/MM/yyyy") // formatar a data para um padrão brasileiro
     private Date dataNascimento;
@@ -91,14 +96,22 @@ public class PessoaDTO implements Serializable {
         this.dataNascimento = dataNascimento;
     }
 
+    public String getNumeroTelefone() {
+        return numeroTelefone;
+    }
+
+    public void setNumeroTelefone(String numeroTelefone) {
+        this.numeroTelefone = numeroTelefone;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof PessoaDTO pessoaDTO)) return false;
-        return Objects.equals(getId(), pessoaDTO.getId()) && Objects.equals(getNome(), pessoaDTO.getNome()) && Objects.equals(getSobrenome(), pessoaDTO.getSobrenome()) && Objects.equals(getEndereco(), pessoaDTO.getEndereco()) && Objects.equals(getDataNascimento(), pessoaDTO.getDataNascimento()) && Objects.equals(getGenero(), pessoaDTO.getGenero());
+        return Objects.equals(getId(), pessoaDTO.getId()) && Objects.equals(getNome(), pessoaDTO.getNome()) && Objects.equals(getSobrenome(), pessoaDTO.getSobrenome()) && Objects.equals(getEndereco(), pessoaDTO.getEndereco()) && Objects.equals(getNumeroTelefone(), pessoaDTO.getNumeroTelefone()) && Objects.equals(getDataNascimento(), pessoaDTO.getDataNascimento()) && Objects.equals(getGenero(), pessoaDTO.getGenero());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getNome(), getSobrenome(), getEndereco(), getDataNascimento(), getGenero());
+        return Objects.hash(getId(), getNome(), getSobrenome(), getEndereco(), getNumeroTelefone(), getDataNascimento(), getGenero());
     }
 }
