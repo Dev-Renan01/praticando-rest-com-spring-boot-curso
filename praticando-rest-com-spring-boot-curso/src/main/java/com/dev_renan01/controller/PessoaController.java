@@ -3,7 +3,7 @@ package com.dev_renan01.controller;
 import com.dev_renan01.data.DTO.PessoaDTO;
 import com.dev_renan01.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,15 +16,13 @@ public class PessoaController {
 
     @Autowired
     private PessoaService pessoaService;
-
-    @GetMapping(value = "/listarTodos")
-    @ResponseBody
+                                        // Indica o tipo de mídia que a API irá retornar, ex: JSON, XML
+    @GetMapping(value = "/listarTodos", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public List<PessoaDTO> findAll(){
         return pessoaService.listarTodos();
     }
 
-    @GetMapping(value = "/buscarPorId/{id}")
-    @ResponseBody
+    @GetMapping(value = "/buscarPorId/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public PessoaDTO findById(@PathVariable(name = "id") Long id){
         var pessoa =  pessoaService.buscarPorId(id);
         pessoa.setDataNascimento(new Date());
@@ -32,20 +30,17 @@ public class PessoaController {
         return pessoa;
     }
 
-    @PostMapping(value = "/salvar")
-    @ResponseBody
+    @PostMapping(value = "/salvar", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public PessoaDTO save(@RequestBody PessoaDTO pessoa){
         return pessoaService.salvar(pessoa);
     }
+    @PutMapping(value = "/atualizar", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 
-    @PutMapping(value = "/atualizar")
-    @ResponseBody
     public PessoaDTO update(@RequestBody PessoaDTO pessoa){
         return pessoaService.atualizar(pessoa);
     }
 
-    @DeleteMapping(value = "/deletar/{id}")
-    @ResponseBody
+    @DeleteMapping(value = "/deletar/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id){
 
         pessoaService.deletarPorId(id);
