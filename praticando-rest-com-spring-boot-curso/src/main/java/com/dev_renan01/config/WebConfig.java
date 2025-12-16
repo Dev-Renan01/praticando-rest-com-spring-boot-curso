@@ -11,7 +11,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurar) {
 
-        configurar .favorParameter(true) // Permite que o tipo de mídia seja definido por parâmetro na URL
+        // Via Query param http://localhost:8080/api/pessoa/buscarPorId/3?mediaType=xml
+
+     /*   configurar .favorParameter(true) // Permite que o tipo de mídia seja definido por parâmetro na URL
                                          // Exemplo: ?mediaType=json ou ?mediaType=xml
                 .parameterName("mediaType") // Define o nome do parâmetro que será usado na URL
                 .ignoreAcceptHeader(true) // Ignora o header HTTP "Accept" enviado pelo cliente
@@ -20,7 +22,16 @@ public class WebConfig implements WebMvcConfigurer {
                 .defaultContentType(MediaType.APPLICATION_JSON)// Define o tipo de conteúdo padrão da resposta
                                                               // Caso nenhum parâmetro seja informado, retorna JSON
                 .mediaType("json", MediaType.APPLICATION_JSON) // Associa o valor "json" ao tipo de mídia application/json
-                .mediaType("xml", MediaType.APPLICATION_XML) // Associa o valor "xml" ao tipo de mídia application/xml
-                .mediaType("yaml", MediaType.APPLICATION_YAML); // Associa o valor "yaml" ao tipo de mídia application/xml
-         }
+                .mediaType("xml", MediaType.APPLICATION_XML); // Associa o valor "xml" ao tipo de mídia application/xml
+         }*/
+
+
+        // Via Header param http://localhost:8080/api/pessoa/buscarPorId/3?mediaType=xml
+        configurar.favorParameter(false)
+                .ignoreAcceptHeader(false)
+                .useRegisteredExtensionsOnly(false)
+                .defaultContentType(MediaType.APPLICATION_JSON)
+                .mediaType("json", MediaType.APPLICATION_JSON)
+                .mediaType("xml", MediaType.APPLICATION_XML);
+    }
 }
