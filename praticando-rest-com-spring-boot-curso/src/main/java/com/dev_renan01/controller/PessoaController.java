@@ -17,12 +17,30 @@ public class PessoaController {
     @Autowired
     private PessoaService pessoaService;
                                         // Indica o tipo de mídia que a API irá retornar, ex: JSON, XML
-    @GetMapping(value = "/listarTodos", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @GetMapping(value = "/listarTodos",
+            produces = {
+                 MediaType.APPLICATION_JSON_VALUE,
+                 MediaType.APPLICATION_XML_VALUE,
+                 MediaType.APPLICATION_YAML_VALUE},
+            consumes = {
+                 MediaType.APPLICATION_JSON_VALUE,
+                 MediaType.APPLICATION_XML_VALUE,
+                 MediaType.APPLICATION_YAML_VALUE}
+    )
     public List<PessoaDTO> findAll(){
         return pessoaService.listarTodos();
     }
 
-    @GetMapping(value = "/buscarPorId/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @GetMapping(value = "/buscarPorId/{id}",
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE},
+            consumes = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE}
+    )
     public PessoaDTO findById(@PathVariable(name = "id") Long id){
         var pessoa =  pessoaService.buscarPorId(id);
         pessoa.setDataNascimento(new Date());
@@ -30,17 +48,44 @@ public class PessoaController {
         return pessoa;
     }
 
-    @PostMapping(value = "/salvar", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @PostMapping(value = "/salvar",
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE},
+            consumes = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE}
+    )
     public PessoaDTO save(@RequestBody PessoaDTO pessoa){
         return pessoaService.salvar(pessoa);
     }
-    @PutMapping(value = "/atualizar", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @PutMapping(value = "/atualizar",
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE},
+            consumes = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE}
+    )
 
     public PessoaDTO update(@RequestBody PessoaDTO pessoa){
         return pessoaService.atualizar(pessoa);
     }
 
-    @DeleteMapping(value = "/deletar/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @DeleteMapping(value = "/deletar/{id}",
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE},
+            consumes = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE}
+    )
     public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id){
 
         pessoaService.deletarPorId(id);
