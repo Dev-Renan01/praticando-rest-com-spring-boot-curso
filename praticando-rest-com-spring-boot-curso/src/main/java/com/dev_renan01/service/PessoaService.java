@@ -1,5 +1,6 @@
 package com.dev_renan01.service;
 
+import com.dev_renan01.controller.PessoaController;
 import com.dev_renan01.data.DTO.PessoaDTO;
 import com.dev_renan01.exception.ResourceNotFoundException;
 import com.dev_renan01.mapper.ObjectMapper;
@@ -9,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.dev_renan01.mapper.ObjectMapper.parseObject;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class PessoaService {
@@ -25,14 +30,20 @@ public class PessoaService {
 
         var entity = pessoaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Pessoa não encontrada para o ID: " + id));
-        return ObjectMapper.parseObject(entity, PessoaDTO.class);
+        var dto = parseObject(entity, PessoaDTO.class);
+        return parseObject(entity, PessoaDTO.class);
+        extracted(id, dto);
+    }
+
+    private static void extracted(Long id, PessoaDTO dto) {
+        dto.add(linkTo(methodOn(PessoaController.class).findById(id)).whithSelfRel().whithType("GET"));
     }
 
     public PessoaDTO salvar(PessoaDTO pessoa) {
 
-        var entity = ObjectMapper.parseObject(pessoa, Pessoa.class);
+        var entity = parseObject(pessoa, Pessoa.class);
 
-        return ObjectMapper.parseObject(pessoaRepository.save(entity), PessoaDTO.class);
+        return parseObject(pessoaRepository.save(entity), PessoaDTO.class);
     }
 
     public PessoaDTO atualizar(PessoaDTO pessoa) {
@@ -45,7 +56,7 @@ public class PessoaService {
         entity.setEndereco(pessoa.getEndereco());
         entity.setGenero(pessoa.getGenero());
 
-        return ObjectMapper.parseObject(pessoaRepository.save(entity), PessoaDTO.class);
+        return parseObject(pessoaRepository.save(entity), PessoaDTO.class);
     }
 
     public void deletarPorId(Long id) {

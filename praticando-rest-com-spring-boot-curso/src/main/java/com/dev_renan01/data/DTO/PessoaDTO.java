@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,7 +16,7 @@ import java.util.Objects;
 
 @Entity
 //@JsonPropertyOrder({"id", "nome", "sobrenome", "endereco", "genero" })    // Custumizar a ordem de exibição do Json
-public class PessoaDTO implements Serializable {
+public class PessoaDTO extends RepresentationModel<PessoaDTO> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
